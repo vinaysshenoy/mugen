@@ -2,40 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="4dp">
+    android:layout_height="64dp"
+    android:padding="4dp"
+    android:baselineAligned="false">
 
-    <ImageView
-        android:id="@+id/imageView_avatar"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_weight="2"
-        android:src="@drawable/ic_github_placeholder"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/app_name" />
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="6"
-        android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:layout_weight="8">
+
+        <ImageView
+            android:id="@+id/imageView_avatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_github_placeholder"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:id="@+id/textView_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:background="#88000000"
+            android:layout_toRightOf="@id/imageView_avatar"
+            android:layout_toEndOf="@id/imageView_avatar"
+            android:layout_alignBottom="@id/imageView_avatar"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:textColor="@android:color/white"
+            android:gravity="left|start" />
 
         <TextView
             android:id="@+id/textView_repo_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imageView_avatar"
+            android:layout_toEndOf="@id/imageView_avatar"
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:textStyle="bold"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="@string/app_name"
             android:gravity="start|left" />
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textView_user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left|start" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -46,7 +59,7 @@
         <TextView
             android:id="@+id/textView_stars"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="28dp"
             android:drawableLeft="@drawable/ic_github_star"
             android:drawableStart="@drawable/ic_github_star"
             android:drawablePadding="4dp"
@@ -56,7 +69,7 @@
         <TextView
             android:id="@+id/textView_forks"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="28dp"
             android:drawableLeft="@drawable/ic_github_fork"
             android:drawableStart="@drawable/ic_github_fork"
             android:drawablePadding="4dp"

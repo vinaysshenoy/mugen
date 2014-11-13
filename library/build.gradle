@@ -1,11 +1,11 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.1"
+    buildToolsVersion "21.1.1"
 
     defaultConfig {
-        applicationId "com.vinaysshenoy.muge"
+        applicationId "com.mugen"
         minSdkVersion 7
         targetSdkVersion 21
         versionCode 1

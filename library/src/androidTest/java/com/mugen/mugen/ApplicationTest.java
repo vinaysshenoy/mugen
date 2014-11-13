@@ -1,4 +1,4 @@
-package com.vinaysshenoy.mugen.mugen;
+package com.mugen.mugen;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

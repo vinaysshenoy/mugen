@@ -1,4 +1,4 @@
-package com.vinaysshenoy.mugen;
+package com.mugen;
 
 /**
  * Enum that maintains scroll directions

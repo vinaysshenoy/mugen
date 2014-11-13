@@ -1,10 +1,10 @@
-package com.vinaysshenoy.mugen;
+package com.mugen;
 
 import android.support.v7.widget.RecyclerView;
 import android.widget.AbsListView;
 
-import com.vinaysshenoy.mugen.attachers.AbsListViewAttacher;
-import com.vinaysshenoy.mugen.attachers.RecyclerViewAttacher;
+import com.mugen.attachers.AbsListViewAttacher;
+import com.mugen.attachers.RecyclerViewAttacher;
 
 /**
  * Helper class to detect whenever an {@link android.widget.AbsListView} has to given a Load
@@ -24,18 +24,20 @@ public class Mugen {
      * Creates a Attacher for AbsListView implementations
      *
      * @param absListView The List for which load more functionality is needed
+     * @param callbacks   The callbacks which will receive the Load more events
      */
-    public AbsListViewAttacher with(final AbsListView absListView) {
-        return new AbsListViewAttacher(absListView);
+    public AbsListViewAttacher with(final AbsListView absListView, final MugenCallbacks callbacks) {
+        return new AbsListViewAttacher(absListView, callbacks);
     }
 
     /**
      * Creates a Attacher for RecyclerView implementations
      *
      * @param recyclerView The List for which load more functionality is needed
+     * @param callbacks    The callbacks which will receive the Load more events
      */
-    public RecyclerViewAttacher with(final RecyclerView recyclerView) {
-        return new RecyclerViewAttacher(recyclerView);
+    public RecyclerViewAttacher with(final RecyclerView recyclerView, final MugenCallbacks callbacks) {
+        return new RecyclerViewAttacher(recyclerView, callbacks);
     }
 
 }

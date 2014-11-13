@@ -26,7 +26,7 @@ public class Mugen {
      * @param absListView The List for which load more functionality is needed
      * @param callbacks   The callbacks which will receive the Load more events
      */
-    public AbsListViewAttacher with(final AbsListView absListView, final MugenCallbacks callbacks) {
+    public static AbsListViewAttacher with(final AbsListView absListView, final MugenCallbacks callbacks) {
         return new AbsListViewAttacher(absListView, callbacks);
     }
 
@@ -36,7 +36,7 @@ public class Mugen {
      * @param recyclerView The List for which load more functionality is needed
      * @param callbacks    The callbacks which will receive the Load more events
      */
-    public RecyclerViewAttacher with(final RecyclerView recyclerView, final MugenCallbacks callbacks) {
+    public static RecyclerViewAttacher with(final RecyclerView recyclerView, final MugenCallbacks callbacks) {
         return new RecyclerViewAttacher(recyclerView, callbacks);
     }
 

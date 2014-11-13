@@ -4,18 +4,19 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,6 @@ import java.util.Locale;
 
 
 public class MainActivity extends ActionBarActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,38 +37,18 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
         private String query = "android";
         private String language = "java";
         private String queryString = "%s+language:%s";
         int currentPage = 1;
+        boolean isLoading = false;
 
+        SwipeRefreshLayout mSwipeRefreshLayout;
         RecyclerView mRecyclerView;
         RepoAdapter mRepoAdapter;
 
@@ -79,6 +59,8 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+            mSwipeRefreshLayout.setOnRefreshListener(this);
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
             LinearLayoutManager manager = new LinearLayoutManager(getActivity(),
                     LinearLayoutManager.VERTICAL,
@@ -86,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setLayoutManager(manager);
             mRecyclerView.setAdapter(mRepoAdapter = new RepoAdapter(null));
-            loadData(query, language, currentPage);
+            loadData(query, language, currentPage, false);
             return rootView;
         }
 
@@ -97,24 +79,23 @@ public class MainActivity extends ActionBarActivity {
             Mugen.with(mRecyclerView, new MugenCallbacks() {
                 @Override
                 public void onLoadMore() {
-                    loadData(query, language, currentPage + 1);
+                    loadData(query, language, currentPage + 1, false);
                 }
 
                 @Override
                 public boolean isLoading() {
-                    return true;
+                    return isLoading;
                 }
 
                 @Override
                 public boolean hasLoadedAllItems() {
-
-                    return false;
+                    return !isLoading;
                 }
             });
 
         }
 
-        private void loadData(final String query, final String language, final int page) {
+        private void loadData(final String query, final String language, final int page, final boolean isRefreshed) {
             new AsyncTask<Integer, Void, List<GitHubClient.Repo>>() {
 
                 @Override
@@ -123,6 +104,7 @@ public class MainActivity extends ActionBarActivity {
                             queryString,
                             query,
                             language);
+                    isLoading = true;
                     return GitHubClient.getClient()
                             .searchRepos(q,
                                     GitHubClient.DEFAULT_SORT,
@@ -132,10 +114,17 @@ public class MainActivity extends ActionBarActivity {
 
                 @Override
                 protected void onPostExecute(List<GitHubClient.Repo> repos) {
-                    mRepoAdapter.onNext(repos);
+                    isLoading = false;
+                    mRepoAdapter.onNext(repos, isRefreshed);
                     currentPage = page;
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
             }.execute(page);
+        }
+
+        @Override
+        public void onRefresh() {
+            loadData(query, language, currentPage, true);
         }
     }
 
@@ -160,7 +149,21 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onBindViewHolder(RepoHolder repoHolder, int i) {
             GitHubClient.Repo repo = repoList.get(i);
-            repoHolder.textName.setText(repo.name);
+            repoHolder.textRepo.setText(repo.name);
+            repoHolder.textUser.setText(repo.owner.login);
+            repoHolder.textStars.setText(repo.starsGazers + "");
+            repoHolder.textForks.setText(repo.forks + "");
+
+            String imgUrl = repo.owner.avatarUrl;
+            if (imgUrl != null && !imgUrl.equals("")) {
+                Picasso.with(repoHolder.imageAvatar.getContext())
+                        .load(imgUrl)
+                        .resize(200, 200)
+                        .error(R.drawable.ic_github_placeholder)
+                        .placeholder(R.drawable.ic_github_placeholder)
+                        .centerCrop()
+                        .into(repoHolder.imageAvatar);
+            }
         }
 
         @Override
@@ -168,25 +171,38 @@ public class MainActivity extends ActionBarActivity {
             return repoList.size();
         }
 
-        public void onNext(List<GitHubClient.Repo> repos) {
+        public void onNext(List<GitHubClient.Repo> repos, boolean top) {
             if (repos == null) {
                 return;
             }
             if (repoList == null) {
                 repoList = new ArrayList<GitHubClient.Repo>();
             }
-            repoList.addAll(repos);
+            if (top) {
+                repoList.addAll(0, repos);
+            } else {
+                repoList.addAll(repos);
+            }
+
             notifyDataSetChanged();
         }
     }
 
     private static class RepoHolder extends RecyclerView.ViewHolder {
 
-        TextView textName;
+        ImageView imageAvatar;
+        TextView textRepo;
+        TextView textUser;
+        TextView textStars;
+        TextView textForks;
 
         public RepoHolder(View itemView) {
             super(itemView);
-            textName = (TextView) itemView.findViewById(R.id.textView_name);
+            imageAvatar = (ImageView) itemView.findViewById(R.id.imageView_avatar);
+            textRepo = (TextView) itemView.findViewById(R.id.textView_repo_name);
+            textUser = (TextView) itemView.findViewById(R.id.textView_user_name);
+            textStars = (TextView) itemView.findViewById(R.id.textView_stars);
+            textForks = (TextView) itemView.findViewById(R.id.textView_forks);
         }
     }
 }

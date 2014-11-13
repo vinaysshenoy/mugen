@@ -1,12 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="4dp">
 
-    <TextView
-        android:id="@+id/textView_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/imageView_avatar"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="2"
+        android:src="@drawable/ic_github_placeholder"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/app_name" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="6"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/textView_repo_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|left" />
+
+        <TextView
+            android:id="@+id/textView_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|start" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView_stars"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:drawableLeft="@drawable/ic_github_star"
+            android:drawableStart="@drawable/ic_github_star"
+            android:drawablePadding="4dp"
+            android:layout_gravity="top"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/textView_forks"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:drawableLeft="@drawable/ic_github_fork"
+            android:drawableStart="@drawable/ic_github_fork"
+            android:drawablePadding="4dp"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -203,6 +203,13 @@ public class MainActivity extends ActionBarActivity {
             textUser = (TextView) itemView.findViewById(R.id.textView_user_name);
             textStars = (TextView) itemView.findViewById(R.id.textView_stars);
             textForks = (TextView) itemView.findViewById(R.id.textView_forks);
+            ((ImageView) itemView.findViewById(R.id.imageView_triangle)).
+                    setColorFilter(itemView
+                            .getContext()
+                            .getResources()
+                            .getColor(R.color.blue_light));
+
+
         }
     }
 }

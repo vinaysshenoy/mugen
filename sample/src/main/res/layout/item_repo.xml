@@ -23,16 +23,28 @@
         <TextView
             android:id="@+id/textView_user_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:text="@string/app_name"
-            android:background="#88000000"
+            android:background="@color/blue_light"
             android:layout_toRightOf="@id/imageView_avatar"
             android:layout_toEndOf="@id/imageView_avatar"
             android:layout_alignBottom="@id/imageView_avatar"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
+            android:textSize="14sp"
             android:textColor="@android:color/white"
             android:gravity="left|start" />
+
+        <ImageView
+            android:id="@+id/imageView_triangle"
+            android:layout_width="18dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="-3dp"
+            android:layout_marginEnd="-3dp"
+            android:src="@drawable/ic_triangle"
+            android:layout_alignBottom="@id/imageView_avatar"
+            android:layout_alignEnd="@id/imageView_avatar"
+            android:layout_alignRight="@id/imageView_avatar" />
 
         <TextView
             android:id="@+id/textView_repo_name"
@@ -64,6 +76,7 @@
             android:drawableStart="@drawable/ic_github_star"
             android:drawablePadding="4dp"
             android:layout_gravity="top"
+            android:textSize="12sp"
             android:gravity="center_vertical" />
 
         <TextView
@@ -74,6 +87,7 @@
             android:drawableStart="@drawable/ic_github_fork"
             android:drawablePadding="4dp"
             android:layout_gravity="bottom"
+            android:textSize="12sp"
             android:gravity="center_vertical" />
 
     </LinearLayout>

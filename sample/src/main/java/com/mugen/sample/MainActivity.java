@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import java.util.Locale;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private static final String TAG = "MainActivity.class";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +93,9 @@ public class MainActivity extends ActionBarActivity {
 
                 @Override
                 public boolean hasLoadedAllItems() {
-                    return !isLoading;
+                    return false;
                 }
-            });
+            }).start();
 
         }
 
@@ -168,18 +171,17 @@ public class MainActivity extends ActionBarActivity {
         }
 
         private GitHubClient.Repo getItem(int position) {
-            int temp = -1;
+            int listSize = 0;
             List<GitHubClient.Repo> repoList = new ArrayList<GitHubClient.Repo>();
             for (List<GitHubClient.Repo> list : repoMap.values()) {
-                if (list.size() > position) {
-                    repoList = list;
-                    temp = position;
-                } else {
-                    temp = position - list.size();
+                repoList.addAll(list);
+                listSize = listSize + list.size();
+                if (listSize > position) {
+                    break;
                 }
             }
-            if (repoList.size() > 0 && temp > -1) {
-                return repoList.get(temp);
+            if (repoList.size() > 0) {
+                return repoList.get(position);
             }
             return null;
         }

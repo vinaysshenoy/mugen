@@ -19,6 +19,7 @@ import com.mugen.MugenCallbacks;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -67,8 +68,8 @@ public class MainActivity extends ActionBarActivity {
                     false);
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setLayoutManager(manager);
-            mRecyclerView.setAdapter(mRepoAdapter = new RepoAdapter(null));
-            loadData(query, language, currentPage, false);
+            mRecyclerView.setAdapter(mRepoAdapter = new RepoAdapter());
+            loadData(query, language, currentPage);
             return rootView;
         }
 
@@ -79,7 +80,7 @@ public class MainActivity extends ActionBarActivity {
             Mugen.with(mRecyclerView, new MugenCallbacks() {
                 @Override
                 public void onLoadMore() {
-                    loadData(query, language, currentPage + 1, false);
+                    loadData(query, language, currentPage + 1);
                 }
 
                 @Override
@@ -95,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        private void loadData(final String query, final String language, final int page, final boolean isRefreshed) {
+        private void loadData(final String query, final String language, final int page) {
             new AsyncTask<Integer, Void, List<GitHubClient.Repo>>() {
 
                 @Override
@@ -115,7 +116,7 @@ public class MainActivity extends ActionBarActivity {
                 @Override
                 protected void onPostExecute(List<GitHubClient.Repo> repos) {
                     isLoading = false;
-                    mRepoAdapter.onNext(repos, isRefreshed);
+                    mRepoAdapter.onNext(repos, page);
                     currentPage = page;
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
@@ -124,19 +125,16 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public void onRefresh() {
-            loadData(query, language, currentPage, true);
+            loadData(query, language, 1);
         }
     }
 
     private static class RepoAdapter extends RecyclerView.Adapter<RepoHolder> {
 
-        List<GitHubClient.Repo> repoList;
+        LinkedHashMap<Integer, List<GitHubClient.Repo>> repoMap;
 
-        public RepoAdapter(List<GitHubClient.Repo> repos) {
-            if (repos == null) {
-                repos = new ArrayList<GitHubClient.Repo>();
-            }
-            this.repoList = repos;
+        public RepoAdapter() {
+            repoMap = new LinkedHashMap<Integer, List<GitHubClient.Repo>>();
         }
 
         @Override
@@ -148,7 +146,10 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public void onBindViewHolder(RepoHolder repoHolder, int i) {
-            GitHubClient.Repo repo = repoList.get(i);
+            GitHubClient.Repo repo = getItem(i);
+            if (repo == null) {
+                return;
+            }
             repoHolder.textRepo.setText(repo.name);
             repoHolder.textUser.setText(repo.owner.login);
             repoHolder.textStars.setText(repo.starsGazers + "");
@@ -166,24 +167,37 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
-        @Override
-        public int getItemCount() {
-            return repoList.size();
+        private GitHubClient.Repo getItem(int position) {
+            int temp = -1;
+            List<GitHubClient.Repo> repoList = new ArrayList<GitHubClient.Repo>();
+            for (List<GitHubClient.Repo> list : repoMap.values()) {
+                if (list.size() > position) {
+                    repoList = list;
+                    temp = position;
+                } else {
+                    temp = position - list.size();
+                }
+            }
+            if (repoList.size() > 0 && temp > -1) {
+                return repoList.get(temp);
+            }
+            return null;
         }
 
-        public void onNext(List<GitHubClient.Repo> repos, boolean top) {
+        @Override
+        public int getItemCount() {
+            int count = 0;
+            for (List<GitHubClient.Repo> list : repoMap.values()) {
+                count = count + list.size();
+            }
+            return count;
+        }
+
+        public void onNext(List<GitHubClient.Repo> repos, int page) {
             if (repos == null) {
                 return;
             }
-            if (repoList == null) {
-                repoList = new ArrayList<GitHubClient.Repo>();
-            }
-            if (top) {
-                repoList.addAll(0, repos);
-            } else {
-                repoList.addAll(repos);
-            }
-
+            repoMap.put(page, repos);
             notifyDataSetChanged();
         }
     }

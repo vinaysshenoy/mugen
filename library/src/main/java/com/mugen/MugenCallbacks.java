@@ -10,7 +10,7 @@ public interface MugenCallbacks {
     /**
      * Callback for when the next set of items should be loaded
      */
-    public void onLoadMore();
+    void onLoadMore();
 
     /**
      * Callback for whether a load operation is currently ongoing
@@ -19,7 +19,7 @@ public interface MugenCallbacks {
      * <code>false</code> otherwise. If <code>true</code>, load more
      * event won't be triggered
      */
-    public boolean isLoading();
+    boolean isLoading();
 
     /**
      * Callback for whether all items have been loaded
@@ -28,5 +28,5 @@ public interface MugenCallbacks {
      * <code>false</code> otherwise. If <code>true</code>, load more
      * event won't be triggered
      */
-    public boolean hasLoadedAllItems();
+    boolean hasLoadedAllItems();
 }

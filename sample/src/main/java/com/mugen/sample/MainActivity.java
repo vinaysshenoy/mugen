@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +82,7 @@ public class MainActivity extends ActionBarActivity {
             Mugen.with(mRecyclerView, new MugenCallbacks() {
                 @Override
                 public void onLoadMore() {
+
                     loadData(query, language, currentPage + 1);
                 }
 
@@ -135,9 +135,11 @@ public class MainActivity extends ActionBarActivity {
     private static class RepoAdapter extends RecyclerView.Adapter<RepoHolder> {
 
         LinkedHashMap<Integer, List<GitHubClient.Repo>> repoMap;
+        List<GitHubClient.Repo> repoList;
 
         public RepoAdapter() {
             repoMap = new LinkedHashMap<Integer, List<GitHubClient.Repo>>();
+            repoList = new ArrayList<GitHubClient.Repo>();
         }
 
         @Override
@@ -172,7 +174,12 @@ public class MainActivity extends ActionBarActivity {
 
         private GitHubClient.Repo getItem(int position) {
             int listSize = 0;
-            List<GitHubClient.Repo> repoList = new ArrayList<GitHubClient.Repo>();
+
+            if (repoList.size() > position) {
+                return repoList.get(position);
+            }
+
+            repoList = new ArrayList<GitHubClient.Repo>();
             for (List<GitHubClient.Repo> list : repoMap.values()) {
                 repoList.addAll(list);
                 listSize = listSize + list.size();

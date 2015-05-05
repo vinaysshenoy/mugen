@@ -1,6 +1,5 @@
 package com.mugen.attachers;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.mugen.MugenCallbacks;
@@ -13,19 +12,15 @@ import com.mugen.ScrollDirection;
  */
 public class RecyclerViewAttacher extends BaseAttacher<RecyclerView, RecyclerView.OnScrollListener> {
 
-    private LinearLayoutManager mLinearLayoutManager;
+    RecyclerViewPositionHelper mRecyclerViewHelper;
 
     public RecyclerViewAttacher(final RecyclerView recyclerView, final MugenCallbacks callbacks) {
         super(recyclerView, callbacks);
+        mRecyclerViewHelper = RecyclerViewPositionHelper.createHelper(recyclerView);
     }
 
     @Override
     protected void init() {
-        if (mAdapterView.getLayoutManager() instanceof LinearLayoutManager) {
-            mLinearLayoutManager = (LinearLayoutManager) mAdapterView.getLayoutManager();
-        } else {
-            throw new IllegalStateException("Mugen currently supports only LinearLayoutManagers");
-        }
         mAdapterView.setOnScrollListener(onScrollListener);
     }
 
@@ -49,9 +44,9 @@ public class RecyclerViewAttacher extends BaseAttacher<RecyclerView, RecyclerVie
              * the next call to this method
              */
                 mCurScrollingDirection = ScrollDirection.SAME;
-                mPrevFirstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+                mPrevFirstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
             } else {
-                final int firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+                final int firstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
                 if (firstVisibleItem > mPrevFirstVisibleItem) {
                     //User is scrolling up
                     mCurScrollingDirection = ScrollDirection.UP;
@@ -72,9 +67,9 @@ public class RecyclerViewAttacher extends BaseAttacher<RecyclerView, RecyclerVie
                         && !mMugenCallbacks.hasLoadedAllItems()) {
                     //Only trigger a load more if a load operation is NOT happening AND all the items have not been loaded
 
-                    final int totalItemCount = mLinearLayoutManager.getItemCount();
-                    final int firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
-                    final int visibleItemCount = Math.abs(mLinearLayoutManager.findLastVisibleItemPosition() - firstVisibleItem);
+                    final int totalItemCount = mRecyclerViewHelper.getItemCount();
+                    final int firstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
+                    final int visibleItemCount = Math.abs(mRecyclerViewHelper.findLastVisibleItemPosition() - firstVisibleItem);
                     final int lastAdapterPosition = totalItemCount - 1;
                     final int lastVisiblePosition = (firstVisibleItem + visibleItemCount) - 1;
                     if (lastVisiblePosition >= (lastAdapterPosition - mTriggerOffset)) {

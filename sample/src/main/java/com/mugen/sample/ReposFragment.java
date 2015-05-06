@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
+import com.mugen.attachers.BaseAttacher;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private String query = "android";
     private String language = "java";
     private String queryString = "%s+language:%s";
+
+    private BaseAttacher mBaseAttacher;
     int currentPage = 1;
     boolean isLoading = false;
 
@@ -77,7 +80,7 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Mugen.with(mRecyclerView, new MugenCallbacks() {
+        mBaseAttacher = Mugen.with(mRecyclerView, new MugenCallbacks() {
             @Override
             public void onLoadMore() {
                 if (currentPage < 5) {

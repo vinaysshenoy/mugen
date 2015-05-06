@@ -6,19 +6,23 @@ import java.util.List;
 
 import retrofit.RestAdapter;
 import retrofit.http.GET;
-import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
- * Created by imran on 13/11/14.
+ * Github Client
+ * <p/>
+ * Define github for retrofit
  */
 public class GitHubClient {
 
+    //github api url
     private static final String API_URL = "https://api.github.com";
 
+    //sort the github repos by stars in desc order
     static final String DEFAULT_SORT = "stars";
     static final String DEFAULT_ORDER = "desc";
 
+    //Search result github response
     static public class SearchResult {
         @SerializedName("total_count")
         int totalCount;
@@ -29,6 +33,7 @@ public class GitHubClient {
 
     }
 
+    //Github repo information
     static public class Repo {
 
         public int id;
@@ -52,15 +57,21 @@ public class GitHubClient {
         }
     }
 
+    //Retorfit github interface
     interface GitHub {
 
         @GET("/search/repositories?per_page=10")
-        public SearchResult searchRepos(@Query("q") String query,
-                                      @Query("sort") String sortBy,
-                                      @Query("order") String order,
-                                      @Query("page") int start);
+        SearchResult searchRepos(@Query("q") String query,
+                                 @Query("sort") String sortBy,
+                                 @Query("order") String order,
+                                 @Query("page") int start);
     }
 
+    /**
+     * Get github client.
+     *
+     * @return Github retrofit interface
+     */
     public static GitHub getClient() {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(API_URL)

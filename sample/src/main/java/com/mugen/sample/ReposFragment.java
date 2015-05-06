@@ -83,7 +83,7 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         mBaseAttacher = Mugen.with(mRecyclerView, new MugenCallbacks() {
             @Override
             public void onLoadMore() {
-                if (currentPage < 5) {
+                if (currentPage <= 5) {
                     loadData(query, language, currentPage + 1);
                 }
 

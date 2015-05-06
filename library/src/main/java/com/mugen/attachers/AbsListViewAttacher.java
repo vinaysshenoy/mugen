@@ -64,7 +64,7 @@ public class AbsListViewAttacher extends BaseAttacher<AbsListView, AbsListView.O
                     //Only trigger a load more if a load operation is NOT happening AND all the items have not been loaded
                     final int lastAdapterPosition = totalItemCount - 1;
                     final int lastVisiblePosition = (firstVisibleItem + visibleItemCount) - 1;
-                    if (lastVisiblePosition >= (lastAdapterPosition - mTriggerOffset)) {
+                    if (lastVisiblePosition >= (lastAdapterPosition - mLoadMoreOffset)) {
                         mMugenCallbacks.onLoadMore();
                     }
 

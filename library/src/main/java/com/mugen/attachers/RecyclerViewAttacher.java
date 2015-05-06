@@ -72,7 +72,7 @@ public class RecyclerViewAttacher extends BaseAttacher<RecyclerView, RecyclerVie
                     final int visibleItemCount = Math.abs(mRecyclerViewHelper.findLastVisibleItemPosition() - firstVisibleItem);
                     final int lastAdapterPosition = totalItemCount - 1;
                     final int lastVisiblePosition = (firstVisibleItem + visibleItemCount) - 1;
-                    if (lastVisiblePosition >= (lastAdapterPosition - mTriggerOffset)) {
+                    if (lastVisiblePosition >= (lastAdapterPosition - mLoadMoreOffset)) {
                         mMugenCallbacks.onLoadMore();
                     }
 

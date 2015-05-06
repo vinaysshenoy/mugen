@@ -25,7 +25,7 @@ public abstract class BaseAttacher<AdapterView, OnScrollListener> {
      * The position offset from the bottom of the list at which the load event
      * must be triggered
      */
-    protected int mTriggerOffset = DEFAULT_LOAD_OFFSET;
+    protected int mLoadMoreOffset = DEFAULT_LOAD_OFFSET;
 
     /**
      * Callbacks for trigereing the load events
@@ -71,16 +71,16 @@ public abstract class BaseAttacher<AdapterView, OnScrollListener> {
      * Gets the trigger offset. This is the position from the
      * bottom at which the load more event is triggered
      */
-    public int getTriggerOffset() {
-        return mTriggerOffset;
+    public int getLoadMoreOffset() {
+        return mLoadMoreOffset;
     }
 
     /**
      * Sets the trigger. This is the position from the bottom at which
      * the load more event is triggered
      */
-    public void setLoadMoreOffset(final int triggerOffset) {
-        mTriggerOffset = triggerOffset;
+    public void setLoadMoreOffset(final int loadMoreOffset) {
+        mLoadMoreOffset = loadMoreOffset;
     }
 
     /**
@@ -103,8 +103,8 @@ public abstract class BaseAttacher<AdapterView, OnScrollListener> {
      *
      * @param offset The offset from the end at which to trigger the load more
      */
-    public BaseAttacher triggerOffset(final int offset) {
-        mTriggerOffset = offset;
+    public BaseAttacher loadMoreOffset(final int offset) {
+        mLoadMoreOffset = offset;
         return this;
     }
 
@@ -123,7 +123,7 @@ public abstract class BaseAttacher<AdapterView, OnScrollListener> {
      *
      * @throws java.lang.IllegalStateException If any configuration is incorrect
      */
-    public void start() {
+    public BaseAttacher start() {
 
         if(mAdapterView == null) {
             throw new IllegalStateException("Adapter View cannot be null");
@@ -133,11 +133,12 @@ public abstract class BaseAttacher<AdapterView, OnScrollListener> {
             throw new IllegalStateException("MugenCallbacks cannot be null");
         }
 
-        if(mTriggerOffset <= 0) {
+        if(mLoadMoreOffset <= 0) {
             throw new IllegalStateException("Trigger Offset must be > 0");
         }
         mIsLoadMoreEnabled = true;
         init();
+        return this;
     }
 
     protected abstract void init();

@@ -25,7 +25,7 @@ import java.util.Locale;
 
 /**
  * Repo Fragment to load Android related github repos.
- *
+ * <p/>
  * Sorted by most popular.
  */
 public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -80,7 +80,10 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         Mugen.with(mRecyclerView, new MugenCallbacks() {
             @Override
             public void onLoadMore() {
-                loadData(query, language, currentPage + 1);
+                if (currentPage < 5) {
+                    loadData(query, language, currentPage + 1);
+                }
+
             }
 
             @Override

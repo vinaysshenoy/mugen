@@ -12,7 +12,6 @@ mugen is a microlibrary for implementing infinite scroll on Android.
 
 # Usage
 
-### Basic
 ```java
     //mCollectionView can be a ListView, GridView, RecyclerView or any instance of AbsListView!
     BaseAttacher attacher = Mugen.with(mCollectionView, new MugenCallbacks() {
@@ -65,6 +64,10 @@ mugen is a microlibrary for implementing infinite scroll on Android.
         */
         attacher.setOnScrollListener(listener);
 ```
+
+### Notes
+mugen will only start working AFTER there are enough items in the list to make it scrollable. Ensure
+that you load at least enough data first so that the list becomes scrollable.
 
 # Installation
 Maven artifact is on the way! Please clone and add as an library module for now.

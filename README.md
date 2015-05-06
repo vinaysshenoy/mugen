@@ -3,8 +3,6 @@ mugen
 
 mugen is a microlibrary for implementing infinite scroll on Android.
 
-![alt_tag][_sample_gif]
-
 # Features
 - Add infinite scroll to your lists with a few lines of code.
 - Configuration allows you to decide how and when to trigger loading. You can even disable load more when all items have been fetched for network usage optimization.
@@ -47,10 +45,9 @@ mugen is a microlibrary for implementing infinite scroll on Android.
                 */
                 return false;
             }
-        });
-        attacher.start();
-        
-        /* Use this to dynamically turn infinite scroll on or off */
+        }).start();
+
+        /* Use this to dynamically turn infinite scroll on or off. It is enabled by default */
         attacher.setLoadMoreEnabled(true); 
         
         /* Use this to change when the onLoadMore() function is called. 
@@ -64,6 +61,8 @@ mugen is a microlibrary for implementing infinite scroll on Android.
         */
         attacher.setOnScrollListener(listener);
 ```
+### mugen in action
+![alt_tag][_sample_gif]
 
 ### Notes
 mugen will only start working AFTER there are enough items in the list to make it scrollable. Ensure

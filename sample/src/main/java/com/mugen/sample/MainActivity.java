@@ -5,11 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 
-
+/**
+ * MainActivity
+ */
 public class MainActivity extends AppCompatActivity implements ReposFragment.OnLoadingListener {
 
     private static final String TAG = "MainActivity.class";
 
+    //horizontal progressbar to show while loading..
     private ProgressBar mProgressBar;
 
     @Override

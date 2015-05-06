@@ -7,7 +7,10 @@ import android.view.View;
 import static android.support.v7.widget.RecyclerView.NO_POSITION;
 
 /**
- * ${CLASS_NAME} com.mugen.attachers.
+ * Recycler View Position Helper class.
+ *
+ * Get the first visible, last visible positions.
+ * Get the position of a child view
  */
 class RecyclerViewPositionHelper {
 

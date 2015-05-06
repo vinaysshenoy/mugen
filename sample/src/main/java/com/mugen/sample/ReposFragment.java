@@ -36,6 +36,7 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         void onLoadingFinished();
     }
 
+    //query android repos
     private String query = "android";
     private String language = "java";
     private String queryString = "%s+language:%s";

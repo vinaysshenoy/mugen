@@ -55,6 +55,10 @@ public class AbsListViewAttacher extends BaseAttacher<AbsListView, AbsListView.O
                 mPrevFirstVisibleItem = firstVisibleItem;
             }
 
+            if(mCurScrollingDirection != ScrollDirection.SAME) {
+                mMugenCallbacks.scrollDirection(mCurScrollingDirection);
+            }
+
             if (mIsLoadMoreEnabled
                     && (mCurScrollingDirection == ScrollDirection.UP)) {
                 //We only need to paginate if user scrolling near the end of the list

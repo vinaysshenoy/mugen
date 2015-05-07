@@ -8,14 +8,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
+import com.mugen.ScrollDirection;
 import com.mugen.attachers.BaseAttacher;
 import com.squareup.picasso.Picasso;
 
@@ -86,7 +89,23 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 if (currentPage <= 5) {
                     loadData(query, language, currentPage + 1);
                 }
+            }
 
+            @Override
+            public void scrollDirection(ScrollDirection direction) {
+                switch (direction) {
+                    case UP:
+                        // Scrolling up
+                        Log.d("Scroll", "UP");
+                        break;
+                    case DOWN:
+                        // Scrolling down
+                        Log.d("Scroll", "DOWN");
+                        break;
+                    default:
+                        // No Scroll
+                        break;
+                }
             }
 
             @Override

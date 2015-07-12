@@ -7,7 +7,7 @@ import com.mugen.ScrollDirection;
 
 /**
  * Class that attaches to a RecyclerView instance and provides Load More functionality
- * <p/>
+ * <p></p>
  * Created by vinaysshenoy on 31/10/14.
  */
 public class RecyclerViewAttacher extends BaseAttacher<RecyclerView, RecyclerView.OnScrollListener> {

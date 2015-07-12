@@ -7,7 +7,7 @@ import com.mugen.ScrollDirection;
 
 /**
  * Class that attaches to a AbsListView instance and performs Load More functionality
- * <p/>
+ * <p></p>
  * Created by vinaysshenoy on 31/10/14.
  */
 public class AbsListViewAttacher extends BaseAttacher<AbsListView, AbsListView.OnScrollListener> {

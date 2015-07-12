@@ -5,7 +5,7 @@ import com.mugen.ScrollDirection;
 
 /**
  * Base class for attachers
- * <p/>
+ * <p></p>
  * Created by vinaysshenoy on 31/10/14.
  */
 public abstract class BaseAttacher<AdapterView, OnScrollListener> {

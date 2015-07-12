@@ -21,7 +21,7 @@ public class RecyclerViewAttacher extends BaseAttacher<RecyclerView, RecyclerVie
 
     @Override
     protected void init() {
-        mAdapterView.setOnScrollListener(onScrollListener);
+        mAdapterView.addOnScrollListener(onScrollListener);
     }
 
     private final RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {

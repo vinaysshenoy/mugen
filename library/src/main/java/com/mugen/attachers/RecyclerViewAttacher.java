@@ -61,7 +61,6 @@ public class RecyclerViewAttacher extends BaseAttacher<RecyclerView, RecyclerVie
             }
 
             if(mCurScrollingDirection != ScrollDirection.SAME) {
-                mMugenCallbacks.scrollDirection(mCurScrollingDirection);
             }
 
             if (mIsLoadMoreEnabled

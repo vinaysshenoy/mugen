@@ -56,7 +56,6 @@ public class AbsListViewAttacher extends BaseAttacher<AbsListView, AbsListView.O
             }
 
             if(mCurScrollingDirection != ScrollDirection.SAME) {
-                mMugenCallbacks.scrollDirection(mCurScrollingDirection);
             }
 
             if (mIsLoadMoreEnabled

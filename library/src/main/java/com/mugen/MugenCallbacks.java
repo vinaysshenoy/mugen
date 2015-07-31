@@ -13,8 +13,6 @@ public interface MugenCallbacks {
     void onLoadMore();
 
 
-    void scrollDirection(ScrollDirection direction);
-
     /**
      * Callback for whether a load operation is currently ongoing
      *

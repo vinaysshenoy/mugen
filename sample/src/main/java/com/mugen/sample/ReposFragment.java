@@ -109,23 +109,6 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             }
 
             @Override
-            public void scrollDirection(ScrollDirection direction) {
-                switch (direction) {
-                    case UP:
-                        // Scrolling up
-                        Log.d("Scroll", "UP");
-                        break;
-                    case DOWN:
-                        // Scrolling down
-                        Log.d("Scroll", "DOWN");
-                        break;
-                    default:
-                        // No Scroll
-                        break;
-                }
-            }
-
-            @Override
             public boolean isLoading() {
                 return isLoading;
             }

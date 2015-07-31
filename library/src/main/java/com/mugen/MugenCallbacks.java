@@ -12,6 +12,7 @@ public interface MugenCallbacks {
      */
     void onLoadMore();
 
+
     /**
      * Callback for whether a load operation is currently ongoing
      *

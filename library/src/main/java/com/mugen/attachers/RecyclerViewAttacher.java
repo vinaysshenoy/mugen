@@ -1,7 +1,6 @@
 package com.mugen.attachers;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.mugen.MugenCallbacks;
 import com.mugen.ScrollDirection;
@@ -58,9 +57,6 @@ public class RecyclerViewAttacher extends BaseAttacher<RecyclerView, RecyclerVie
                     mCurScrollingDirection = ScrollDirection.SAME;
                 }
                 mPrevFirstVisibleItem = firstVisibleItem;
-            }
-
-            if(mCurScrollingDirection != ScrollDirection.SAME) {
             }
 
             if (mIsLoadMoreEnabled

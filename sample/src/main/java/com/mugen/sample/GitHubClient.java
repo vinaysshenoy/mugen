@@ -60,11 +60,12 @@ public class GitHubClient {
     //Retorfit github interface
     interface GitHub {
 
-        @GET("/search/repositories?per_page=10")
+        @GET("/search/repositories")
         SearchResult searchRepos(@Query("q") String query,
                                  @Query("sort") String sortBy,
                                  @Query("order") String order,
-                                 @Query("page") int start);
+                                 @Query("page") int start,
+                                 @Query("per_page") int perPage);
     }
 
     /**

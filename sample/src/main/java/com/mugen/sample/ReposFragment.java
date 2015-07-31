@@ -1,6 +1,7 @@
 package com.mugen.sample;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -44,9 +45,11 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private String query = "android";
     private String language = "java";
     private String queryString = "%s+language:%s";
+    final int DEFAULT_PER_PAGE = 10;
 
     private BaseAttacher mBaseAttacher;
     int currentPage = 1;
+    int perPage = DEFAULT_PER_PAGE;
     boolean isLoading = false;
 
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -75,8 +78,22 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mRepoAdapter = new RepoAdapter());
-        loadData(query, language, currentPage);
+
+        perPage = getPerPage(rootView.getContext());
+
+        loadData(query, language, currentPage, perPage);
         return rootView;
+    }
+
+    /**
+     * Get items to load per page onScroll.
+     * @param context {@link Context}
+     * @return int of num of items that can be loaded onto the screen with scroll enabled
+     */
+    private int getPerPage(Context context) {
+        //fixed item size in recyclerview. Adding 3 enables recyclerview scrolling.
+        return (context.getResources().getDisplayMetrics().heightPixels
+                / context.getResources().getDimensionPixelSize(R.dimen.repo_item_height)) + 3;
     }
 
     @Override
@@ -87,7 +104,7 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             @Override
             public void onLoadMore() {
                 if (currentPage <= 5) {
-                    loadData(query, language, currentPage + 1);
+                    loadData(query, language, currentPage + 1, perPage);
                 }
             }
 
@@ -121,7 +138,7 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     }
 
-    private void loadData(final String query, final String language, final int page) {
+    private void loadData(final String query, final String language, final int page, final int perPage) {
         new AsyncTask<Integer, Void, List<GitHubClient.Repo>>() {
 
             @Override
@@ -144,7 +161,8 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                         .searchRepos(q,
                                 GitHubClient.DEFAULT_SORT,
                                 GitHubClient.DEFAULT_ORDER,
-                                params[0]).repos;
+                                params[0],
+                                perPage).repos;
             }
 
             @Override
@@ -167,7 +185,7 @@ public class ReposFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onRefresh() {
-        loadData(query, language, 1);
+        loadData(query, language, 1, perPage);
     }
 
     private static class RepoAdapter extends RecyclerView.Adapter<RepoHolder> {

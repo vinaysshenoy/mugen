@@ -3,7 +3,7 @@ mugen
 
 mugen is a microlibrary for implementing infinite scroll on Android.
 
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Mugen-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1757) [![Maven Central](https://img.shields.io/maven-central/v/com.vinaysshenoy/mugen.svg?style=plastic)](http://search.maven.org/#artifactdetails%7Ccom.vinaysshenoy%7Cmugen%7C1.0.1%7Caar)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Mugen-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1757) [![Maven Central](https://img.shields.io/maven-central/v/com.vinaysshenoy/mugen.svg?style=plastic)](http://search.maven.org/#artifactdetails%7Ccom.vinaysshenoy%7Cmugen%7C1.0.2%7Caar)
 
 
 
@@ -75,7 +75,7 @@ that you load at least enough data first so that the list becomes scrollable.
 # Installation
 There are two ways you can install mugen.
 ### As a gradle dependency(preferred)
-Add the line `compile 'com.vinaysshenoy:mugen:1.0.1'` to your `dependencies` section in your `build.gradle` script
+Add the line `compile 'com.vinaysshenoy:mugen:1.0.2'` to your `dependencies` section in your `build.gradle` script
 
 ### Cloning and adding
 1. Clone the repository

@@ -14,8 +14,6 @@ import com.mugen.attachers.RecyclerViewAttacher;
  */
 public class Mugen {
 
-    private static final String TAG = "Mugen";
-
     private Mugen() {
         //Default constructor to prevent initialization
     }

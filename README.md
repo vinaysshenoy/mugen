@@ -75,7 +75,7 @@ that you load at least enough data first so that the list becomes scrollable.
 # Installation
 There are two ways you can install mugen.
 ### As a gradle dependency(preferred)
-Add the line `compile 'com.vinaysshenoy:mugen:1.0.2'` to your `dependencies` section in your `build.gradle` script
+Add the line `compile 'com.vinaysshenoy:mugen:1.0.3'` to your `dependencies` section in your `build.gradle` script
 
 ### Cloning and adding
 1. Clone the repository

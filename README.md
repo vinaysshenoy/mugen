@@ -1,6 +1,9 @@
 mugen
 =====
 
+# Notice
+This repository is no longer in development! Please use the [paging library](https://developer.android.com/topic/libraries/architecture/paging/) instead
+
 mugen is a microlibrary for implementing infinite scroll on Android.
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Mugen-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1757) [![Maven Central](https://img.shields.io/maven-central/v/com.vinaysshenoy/mugen.svg?style=plastic)](http://search.maven.org/#artifactdetails%7Ccom.vinaysshenoy%7Cmugen%7C1.0.2%7Caar)

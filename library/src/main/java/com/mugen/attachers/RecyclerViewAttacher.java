@@ -68,10 +68,8 @@ public class RecyclerViewAttacher extends BaseAttacher<RecyclerView, RecyclerVie
                     //Only trigger a load more if a load operation is NOT happening AND all the items have not been loaded
 
                     final int totalItemCount = mRecyclerViewHelper.getItemCount();
-                    final int firstVisibleItem = mRecyclerViewHelper.findFirstVisibleItemPosition();
-                    final int visibleItemCount = Math.abs(mRecyclerViewHelper.findLastVisibleItemPosition() - firstVisibleItem);
                     final int lastAdapterPosition = totalItemCount - 1;
-                    final int lastVisiblePosition = (firstVisibleItem + visibleItemCount) - 1;
+                    final int lastVisiblePosition = mRecyclerViewHelper.findLastVisibleItemPosition();
                     if (lastVisiblePosition >= (lastAdapterPosition - mLoadMoreOffset)) {
                         mMugenCallbacks.onLoadMore();
                     }
